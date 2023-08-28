@@ -1,15 +1,16 @@
 const express = require("express");
+const userController = require("../controllers/userController");
 
 const userRouter = express.Router();
 
-// app.use("/api/v1/tours", tourRouter);
+userRouter.route("/signup").post(userController.signUp);
+userRouter.route("/signin").post(userController.signIn);
+userRouter.route("/getall").post(userController.getAllUsers);
 
-tourRouter.route("/").get(getAllTours).post(addNewTour);
-
-tourRouter
-  .route("/:id")
-  .get(getOneTour)
-  .patch(updateOneTour)
-  .delete(deleteOneTour);
+// userRouter
+//   .route("/:id")
+//   .get(getOneTour)
+//   .patch(updateOneTour)
+//   .delete(deleteOneTour);
 
 module.exports = userRouter;

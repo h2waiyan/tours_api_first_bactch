@@ -6,7 +6,7 @@ const AppError = require("./apifeatures/appError");
 const errorCtrl = require("./controllers/errorController");
 
 const tourRouter = require("./routes/tourRouter");
-// const userRouter = require("./routes/userRouter");
+const userRouter = require("./routes/userRouter");
 
 const app = express();
 
@@ -31,7 +31,7 @@ app.use(myLogger); // <------- Middlewares ORDER matters in EXPRESS
 app.use(reqTime);
 
 app.use("/api/v1/tours", tourRouter);
-// app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", userRouter);
 
 app.all("*", (req, res, next) => {
   // res.status(404).json({

@@ -32,13 +32,17 @@ exports.addNewTour = catchAsync(async (req, res) => {
 exports.getOneTour = async (req, res) => {
   console.log(req.body.name);
   try {
-    // const tour = await Tour.findById(req.params.id);
+    const tour = await Tour.findById(req.params.id);
 
-    const tour = await Tour.findOne({ name: req.body.name });
+    // const tour = await Tour.findOne({ name: req.body.name }); // []
+
+    if (!tour) {
+      return next(new AppError("No tour found", 404));
+    }
 
     res.status(200).json({
       status: "success",
-      data: tour,
+      data: tour, // []
     });
   } catch (err) {
     res.status(404).json({
@@ -53,6 +57,11 @@ exports.updateOneTour = async (req, res) => {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
+
+    if (!tour) {
+      return new AppError("No Tour Found", 404);
+    }
+
     res.status(200).json({
       message: "success",
       data: {
