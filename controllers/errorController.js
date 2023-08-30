@@ -5,6 +5,12 @@ const handleDBIdError = (err) => {
   return new AppError(message, 400);
 };
 
+const handleJWTError = () =>
+  new AppError("Invalid token. Please log in again!", 401);
+
+const handleJWTExpiredError = () =>
+  new AppError("Your token has expired! Please log in again.", 401);
+
 module.exports = (err, req, res, next) => {
   //   console.log(err.stack);
   const sendErrorDev = (err, res) => {
@@ -40,11 +46,12 @@ module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV == "development") {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV == "prod") {
-    // let error = { ...err };
+    console.log(">>>>>>>>");
+    let error = { ...err };
+    console.log(error);
 
-    // console.log(...err);
-
-    // if (error.name == "CastError") error = handleDBIdError;
-    sendErrorProd(err, res);
+    if (error.name == "TokenExpiredError") error = handleJWTExpiredError();
+    if (error.name == "JsonWebTokenError") error = handleJWTError();
+    sendErrorProd(error, res);
   }
 };
