@@ -76,21 +76,14 @@ exports.updateOneTour = async (req, res) => {
   }
 };
 
-exports.deleteOneTour = async (req, res) => {
-  try {
-    await Tour.findByIdAndDelete(req.params.id);
+exports.deleteOneTour = catchAsync(async (req, res) => {
+  await Tour.findByIdAndDelete(req.params.id);
 
-    res.status(200).json({
-      message: "success",
-      data: null,
-    });
-  } catch (err) {
-    return res.status(400).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    message: "success",
+    data: null,
+  });
+});
 
 exports.checkId = (req, res, next, val) => {
   console.log(">>>>>>>>>>>>>>>>>");

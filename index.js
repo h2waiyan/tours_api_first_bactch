@@ -17,7 +17,7 @@ app.use(
     origin: "*",
   })
 );
-console.log("?>>>>>>>>>");
+
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV == "development") {
   app.use(morgan("dev"));

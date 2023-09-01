@@ -6,7 +6,7 @@ const tourRouter = express.Router();
 tourRouter
   .route("/")
   .get(authController.protect, tourController.getAllTours)
-  .post(tourController.addNewTour);
+  .post(authController.protect, tourController.addNewTour);
 
 tourRouter
   .route("/top-5-cheap")
@@ -15,8 +15,12 @@ tourRouter
 tourRouter
   .route("/:id")
   .get(tourController.getOneTour)
-  .patch(tourController.updateOneTour)
-  .delete(tourController.deleteOneTour);
+  .patch(authController.protect, tourController.updateOneTour)
+  .delete(
+    authController.protect, // check token - authentication -> id -> user
+    authController.restrictTo("user", "guide"), // authorization ->
+    tourController.deleteOneTour
+  );
 
 // tourRouter.param("id", (req, res, next, val) => {
 //   console.log(`Tour id is ${val}`);
