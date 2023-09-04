@@ -9,7 +9,7 @@ userRouter.route("/signin").post(userController.signIn);
 userRouter.route("/getall").post(userController.getAllUsers);
 
 userRouter.post("/forgotpassword", authController.forgotPassword);
-userRouter.post("/resetpassword", authController.resetPassword);
+userRouter.post("/resetpassword/:token", authController.resetPassword);
 
 // userRouter
 //   .route("/:id")
